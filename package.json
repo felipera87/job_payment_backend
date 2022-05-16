@@ -4,17 +4,25 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.19.0",
+    "celebrate": "^15.0.1",
+    "date-fns": "^2.28.0",
     "express": "4.17.1",
+    "express-async-errors": "^3.1.1",
     "sequelize": "^6.3.4",
-    "sqlite3": "^4.0.1"
+    "sqlite3": "^4.0.1",
+    "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/server.ts",
-    "seed": "ts-node ./scripts/seedDb.ts"
+    "start": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --trace-warnings --ignore-watch node_modules src/server.ts",
+    "seed": "ts-node ./scripts/seedDb.ts",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/express": "^4.17.13",
+    "@types/jest": "^26.0.20",
     "@types/sequelize": "^4.28.13",
+    "@types/yup": "^0.29.13",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "concurrently": "4.1.0",

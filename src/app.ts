@@ -1,30 +1,44 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 
 import bodyParser from 'body-parser';
 
-import { sequelize } from './model';
+import { errors } from 'celebrate';
 
-import getProfile from './middleware/getProfile';
+import 'express-async-errors';
+
+import AppError from 'errors/AppError';
+import routes from 'routes';
+
+import sequelize from './models';
+import './models/associations';
 
 const app = express();
 app.use(bodyParser.json());
 app.set('sequelize', sequelize);
-app.set('models', sequelize.models);
 
-/**
- * FIX ME!
- * @returns contract by id
- */
-app.get(
-  '/contracts/:id',
-  getProfile,
-  async (req: Request, res: Response): Promise<Response> => {
-    const { Contract } = req.app.get('models');
-    const { id } = req.params;
-    const contract = await Contract.findOne({ where: { id } });
-    if (!contract) return res.status(404).end();
-    return res.json(contract);
-  },
-);
+app.use(routes);
+
+app.use(errors());
+
+app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      status: 'error',
+      message: err.message,
+      validationErrors:
+        Object.keys(err.validationErrors).length > 0
+          ? err.validationErrors
+          : undefined,
+    });
+  }
+
+  // eslint-disable-next-line no-console
+  console.error(err);
+
+  return res.status(500).json({
+    status: 'error',
+    message: 'Internal server error.',
+  });
+});
 
 export default app;

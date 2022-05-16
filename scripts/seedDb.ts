@@ -1,4 +1,8 @@
-import { Profile, Contract, Job } from '../src/model';
+import Profile from '../src/models/Profile';
+import Contract from '../src/models/Contract';
+import Job from '../src/models/Job';
+
+import '../src/models/associations';
 
 async function seed() {
   // create tables

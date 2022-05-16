@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./",
@@ -8,6 +8,14 @@
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
     "allowJs": true,
+    "paths": {
+      "@repositories/*": ["./repositories/*"],
+      "@models/*": ["./models/*"],
+      "@services/*": ["./services/*"],
+      "@controllers/*": ["./controllers/*"],
+      "@errors/*": ["./errors/*"],
+      "@utils/*": ["./utils/*"]
+    },
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
